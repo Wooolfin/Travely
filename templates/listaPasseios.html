@@ -1,0 +1,30 @@
+{% extends 'modelo.html' %}
+{% block conteudo %}
+
+
+<div>
+    <h1>lista de passeios!</h1>
+</div>
+
+<div id="passeios">
+    {% if not (passeios) %}
+    <h2>Não há passeios cadastrados</h2>
+    {% else %}
+    {% for passeio in passeios %} 
+
+    <a href="/detalhes/{{ passeio[0] }}"> <!-- FAZ OS DETALHES DO PASSEIO IREM PRA OUTRA PAGINA -->
+
+        <div class="boxpasseios"> 
+            <img src="../static/images/imgCanion.png" style="height: 162px; width: 266px;">
+
+            <h3>{{ passeio[1] }}</h3>
+            <p>Local: {{ passeio[3] }}</p>
+            <p>Descrição: {{ passeio[2] }}</p>
+        </div>
+    </a>
+
+    {% endfor %}
+
+    {% endif %}
+
+{% endblock %}

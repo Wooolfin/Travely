@@ -1,0 +1,35 @@
+{% extends 'modelo.html' %}
+{% block conteudo %}
+
+<div id="login">
+    <form action="/cadastrarGuia" method="POST">
+        <h1>1. Dados Pessoais</h1>
+        <div>
+            <input type="text" name="nome" placeholder="Nome" required>
+            <input type="text" name="sobrenome" placeholder="Sobrenome" required>
+            <input type="text" name="cpf_cnpj" placeholder="CPF/CNPJ" required>
+            <input type="text" name="telefone" placeholder="+55 Número do telefone" required>
+            <input type="date" name="data_nascimento" placeholder="Data Nascimento" required>
+            <input type="text" name="cadastur" placeholder="Cadastur" required>
+            <input type="text" name="chavePix" placeholder="Chave Pix" required>
+            <input type="text" name="cep" placeholder="cep" required>
+            <input type="text" name="ruaEndUser" placeholder="Rua" required>
+            <input type="text" name="bairroEndUser" placeholder="Bairro" required>
+            <input type="number" name="numEndUser" placeholder="Número" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="email" name="confirmar_email" placeholder="Confirmar email" required>
+        
+        </div>
+        <h1 class="section-title">3. Privacidade</h1>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <input type="password" name="confirmar_senha" placeholder="Confirmar senha" required>
+
+        <div class="notice">
+            As senhas devem ter no mínimo 8 caracteres e pelo menos duas das seguintes opções: letras maiúsculas, letras minúsculas, números e símbolos.
+        </div>
+
+        <button type="submit" class="btn">Cadastrar</button>
+    </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles.css">
+    <title>Trevely</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="/">
+                <img src="../static/images/logo.png">
+            </a>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="/">Trilhas</a></li>
+                <li><a href="/sobre">Passeios</a></li>
+                <li><a href="/contato">Excursão</a></li>
+            </ul>
+        </nav>
+        <div class="iconeUser">
+            <a href="/listaPasseios">
+                <img src="../static/images/iconeUser.png" style="height: 34px; width: 63px;">
+            </a>
+        </div>
+        
+    </header>
+
+<main>
+    {% block conteudo %}
+    {% endblock %}
+</main>
+
+<footer>
+    <h1> Trabalhe Conosco</h1>
+    <a style="color: white;"  href="/login">Acesso ao administrador</a>
+    <p>Feito com FLASK</p>
+</footer>
+    
+</body>
+</html>

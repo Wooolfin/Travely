@@ -1,0 +1,15 @@
+{% extends 'modelo.html' %}
+{% block conteudo %}
+
+<!-- abre uma caixa com H3 descricao, dados do banco de dados -->
+
+<div id="detalhes">
+    <h3>{{ passeio[1] }}</h3>
+    <p>Local: {{ passeio[3] }}</p>
+    <p>Detalhes: {{ passeio[2] }}</p>
+
+</div>
+
+<p class="voltar"><a href="/">Voltar para Home</a></p>
+
+{% endblock %}

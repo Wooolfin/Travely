@@ -1,0 +1,37 @@
+{% extends 'modelo.html' %}
+{% block conteudo %}
+<div id="novopasseio">
+    <form action="/cadPasseio" method="post">
+        <h2>Cadastro do novo passeio</h2>
+
+        <label for="nome">Nome passeio:</label><br>
+        <input class="iptCadastrar"type="text" name="nome" id="nome" required><br><br>
+
+        <label for="cepEndPasseio">CEP:</label><br>
+        <input class="iptCadastrar"type="text" name="cepEndPasseio" id="cepEndPasseio" required><br><br>
+
+        <label for="ruaEndPasseio">Rua:</label><br>
+        <input class="iptCadastrar"type="text" name="ruaEndPasseio" id="ruaEndPasseio" required><br><br>
+
+        <label for="bairroEndPasseio">Bairro:</label><br>
+        <input class="iptCadastrar"type="text" name="bairroEndPasseio" id="bairroEndPasseio" required><br><br>
+
+        <label for="numEndPasseio">Numero:</label><br>
+        <input class="iptCadastrar"type="text" name="numEndPasseio" id="numEndPasseio" required><br><br>
+
+        <label for="qtdPessoas">Quantidade de pessoas:</label><br>
+        <input class="iptCadastrar" type="number" min="0" max="5" step="1" name="qtdPessoas" id="qtdPessoas" required><br><br>
+
+        <label for="tempo">Tempo passeio (min):</label><br>
+        <input class="iptCadastrar" type="number" name="tempo" id="tempo" required><br><br>
+
+        <label for="valor">Valor:</label><br>
+        <input class="iptCadastrar" type="number" name="valor" id="valor" required><br><br>
+
+        <label for="descricao">Descreva mais informações o passeio:</label><br>
+        <input class="iptCadastrar" type="text" name="descricao" id="descricao" required ></input><br>
+
+        <input class="btnCadastrar" type="submit" value="Cadastrar Passeio">
+    </form>
+</div>
+{% endblock %}

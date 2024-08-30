@@ -1,0 +1,27 @@
+{% extends 'modelo.html' %}
+{% block conteudo %}
+<div id="login">
+    <form action="/acesso" method="post">
+
+        <h2>Área administrativa</h2>
+        
+        {% if msg %} <!-- mensagem prenchida -->
+        <h2 style="color: red;">{{ msg }}</h2>
+        {% endif %}
+
+        <label for="usuario">Usuário:</label><br>
+        <input class="iptLogin" type="text" name="usuario" id="usuario" required><br><br>
+
+        <label for="senha">Login:</label><br>
+        <input class="iptLogin" type="password" name="senha" id="senha" required><br><br>
+
+        <input class="btnGeral" type="submit" value="Login">
+        <div>
+            <a href="/cadGuia" class="btnGeral" >Cadastrar Guia</a>
+            <a href="/cadTurista" class="btnGeral" >Cadastrar Turista</a>
+           
+        </div>
+    </form>
+</div>
+<a href="/">Voltar</a>
+{% endblock %}
