@@ -1,0 +1,255 @@
+/*Documentos CSS*/
+@import url('https://fonts.googleapis.com/css2?family=Cardo:wght@700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Vampiro+One&display=swap');
+
+:root {
+    --cor-primaria: #027368; 
+    --cor-secundaria: #5E4333; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Istok', sans-serif;
+}
+a{
+    text-decoration: none;
+    cursor: pointer; 
+}
+body{
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+}
+header{
+    color: #027368;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-around;
+    flex-wrap: wrap;/*quebra*/
+    min-height: 80px;
+    background-color: rgb(255, 255, 255);
+}
+.logo {
+    height:40px;
+    margin: 0 0px;
+}
+.logo img {
+    height: 100%;
+}
+/* .iconeUser{
+    width: 94px;
+    height: 52px;
+} */
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.menu ul {
+    list-style: none;
+}
+.menu ul li {
+    display: inline-block;
+}
+.menu ul li a{
+    color: #027368;
+    padding:20px 40px;
+    font-size:16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.menu ul li a:hover {
+    color: #01b19f;
+    font-size: 16.5px;
+}
+
+main{
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.mkt {
+    background-image: url('images/Banner\ Home.png');
+    width: 100%;
+    height: 600px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.frase {
+    width: 100%;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.452);
+    margin-top: 200px;
+    color: rgb(233, 226, 226);
+    text-shadow: 3px 3px 1px black;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cad{
+    flex-direction: column;
+}
+
+footer{
+    color: rgb(234, 229, 229);
+    display: flex;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background-color: #5E4333;
+    font-size: small;
+}
+.btnFooter {
+    color: white;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.btnFooter:hover {
+    color: #01b19f;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.dirTravely {
+    font-size: 14px;
+    padding-top: 16px;
+}
+
+
+.linha {
+    height: 30px;
+    border-right: 3px solid rgb(255, 255, 255);
+    margin: 10px;
+}
+
+.iptadm {
+    font-size: medium;
+    font-family: 'Istok', sans-serif;
+}
+
+#passeios{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.boxpasseios{
+    border: 1px solid #E4E4E4;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    margin: 10px;
+    /* padding-left: 16px; */
+    box-shadow: 5px 5px 5px #a4a4a4a4;
+    border-radius: 4px 4px 0px 0px
+}
+#novopasseio {
+    width: 50%;
+    box-shadow: 0px 0px 100px #a4a4a4a4;
+    border-radius: 15px;
+    margin: 10px auto 0 auto;
+    padding: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#novopasseio form {
+    text-align: left;
+}
+.iptCadastrar {
+    width: 460px;
+    height: 30px;
+}
+.btnCadastrar {
+    background-color: #027368;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    margin-top: 12px;
+    margin-left: 30%;
+    transition: all 0.3s ease;
+}
+
+.btnCadastrar:hover{
+    background: #01b19f;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19)
+}
+
+.btnGeral {
+    margin-top: 20px;
+    padding: 8px;
+    background: #027368;
+    cursor: pointer;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin: 10px;
+    width: 150px;
+}
+
+.btnGeral:hover {
+    background: #01b19f;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#adm table,tr,td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px 50px 10px 50px;
+    margin: 20px auto;
+}
+#adm thead{
+    background-color: brown;
+    color: white;
+}
+
+.iptLogin{
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+}
+#detalhes{
+    width: 30%;
+    min-width: 100px;
+    box-shadow: 0px 0px 100px #a4a4a4a4;
+    border-radius: 15px;
+    margin: 10px auto 0 auto;
+    padding: 2%;
+    justify-content: center;
+    display: flex;
+    overflow-wrap: break-word;
+    flex-direction: column;
+}
+#detalhes h3, p { /*coloca uma margem nos textos*/
+    margin-bottom: 30px;
+}
+.voltar{ /*edita o botao voltar da pagina*/
+    margin: 20px;
+}
+.voltar:hover{ /*adiciona uma decoracao no botao voltar*/
+    text-decoration: underline;
+}
+

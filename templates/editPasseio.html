@@ -1,0 +1,43 @@
+{% extends 'modelo.html' %}
+{% block conteudo %}
+<link rel="stylesheet" href="../static/styles-editPasseio.css">
+<div id="editarPasseio">
+    <h2>Editar o passeio</h2>
+
+    <!-- Formulário começa aqui -->
+    <form action="/{{ passeio[0] }}/editadoPasseio" method="POST">
+
+        <label for="nome">Nome passeio:</label><br>
+        <input class="iptCadastrar" type="text" name="nome" id="nome" placeholder="{{ passeio[1] }}" value="{{ passeio[1] }}" required><br><br>
+
+        <label for="cepEndPasseio">CEP:</label><br>
+        <input class="iptCadastrar" type="text" name="cepEndPasseio" id="cepEndPasseio" placeholder="{{ passeio[2] }}" value="{{ passeio[2] }}" required><br><br>
+
+        <label for="ruaEndPasseio">Rua:</label><br>
+        <input class="iptCadastrar" type="text" name="ruaEndPasseio" id="ruaEndPasseio" placeholder="{{ passeio[3] }}" value="{{ passeio[3] }}" required><br><br>
+
+        <label for="bairroEndPasseio">Bairro:</label><br>
+        <input class="iptCadastrar" type="text" name="bairroEndPasseio" id="bairroEndPasseio" placeholder="{{ passeio[4] }}" value="{{ passeio[4] }}" required><br><br>
+
+        <label for="numEndPasseio">Numero:</label><br>
+        <input class="iptCadastrar" type="number" name="numEndPasseio" id="numEndPasseio" placeholder="{{ passeio[5] }}" value="{{ passeio[5] }}" required ><br><br>
+
+        <label for="qtdPessoas">Quantidade de pessoas:</label><br>
+        <input class="iptCadastrar" type="number" min="0" max="5" step="1" name="qtdPessoas" id="qtdPessoas" placeholder="{{ passeio[6] }}" value="{{ passeio[6] }}" required><br><br>
+
+        <label for="tempo">Tempo passeio (min):</label><br>
+        <input class="iptCadastrar" type="number" name="tempo" id="tempo" placeholder="{{ passeio[7] }}" value="{{ passeio[7] }}" required><br><br>
+
+        <label for="valor">Valor:</label><br>
+        <input class="iptCadastrar" type="number" name="valor" id="valor" placeholder="{{ passeio[8] }}" value="{{ passeio[8] }}" required><br><br>
+
+        <label for="descricao">Descreva mais informações o passeio:</label><br>
+        <input class="iptCadastrar" type="text" name="descricao" id="descricao" placeholder="{{ passeio[9] }}" value="{{ passeio[9] }}" required></input><br>
+        
+        <!-- Botão de submissão dentro do formulário -->
+        <button class="btnCadastrar" type="submit">Editar Passeio</button>
+    </form>
+    <!-- Formulário termina aqui -->
+
+</div>
+{% endblock %}

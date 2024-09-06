@@ -1,27 +1,51 @@
 {% extends 'modelo.html' %}
 {% block conteudo %}
-<div id="login">
-    <form action="/acesso" method="post">
+<link rel="stylesheet" href="../static/styles-login.css">
 
-        <h2>Área administrativa</h2>
-        
-        {% if msg %} <!-- mensagem prenchida -->
-        <h2 style="color: red;">{{ msg }}</h2>
-        {% endif %}
+<body class="login-background">
+    <div id="login">
+        <form action="/acesso" method="post" class="content">
 
-        <label for="usuario">Usuário:</label><br>
-        <input class="iptLogin" type="text" name="usuario" id="usuario" required><br><br>
+            <h2 class="lblEntrar">Entrar</h2>
 
-        <label for="senha">Login:</label><br>
-        <input class="iptLogin" type="password" name="senha" id="senha" required><br><br>
+            {% if msg %} <!-- mensagem prenchida -->
+            <h2 style="color: red;">{{ msg }}</h2>
+            {% endif %}
 
-        <input class="btnGeral" type="submit" value="Login">
-        <div>
-            <a href="/cadGuia" class="btnGeral" >Cadastrar Guia</a>
-            <a href="/cadTurista" class="btnGeral" >Cadastrar Turista</a>
-           
-        </div>
-    </form>
-</div>
-<a href="/">Voltar</a>
+            <input class="iptLogin" type="text" name="usuario" id="usuario" placeholder="Nome de Usuário"required><br><br>
+
+            <input class="iptLogin" type="password" name="senha" id="senha" placeholder="Senha" required><br><br>
+
+            <input class="btnGeral" type="submit" value="Login">
+
+            <div>
+                <a href="/cadGuia" class="btnGeral">Cadastrar Guia</a>
+                <a href="/cadTurista" class="btnGeral">Cadastrar Turista</a>
+            </div>
+            <h3>Ou</h3>
+            <div class="footerform">
+                <div class="social-field">
+                    <div class="social-field google">
+                        <a href="#">
+                            <i class="fab fa-google">
+                                Conecte-se com Google
+                            </i>
+                            <img id="googleimg" src="../static/images/google-37.svg">
+                        </a>
+                    </div>
+                    <div class="social-field facebook">
+                        <a href="#">
+                            <i class="icon icon-facebook">
+                                Conecte-se com Facebook
+                            </i>
+                            <img id="facebookimg"
+                                src="../static/images/Facebook-f_Logo-Blue-Logo.wine_preview_rev_1.png"
+                                alt="Logofacebook">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="btnGeral" href="/">Voltar</a>
+        </form>
+</body>
 {% endblock %}

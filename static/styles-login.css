@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo:wght@700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Vampiro+One&display=swap');
+
+:root {
+    --cor-primaria: #027368;
+    --cor-secundaria: #5E4333;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: 'Istok', sans-serif;
+}
+
+.login-background {
+    height: 105vh;
+    background-image: url('../static/images/Corpo.svg');
+    background-size: cover;
+    background-position: relative;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin-top: 7px;
+}
+
+#usuario {
+    padding: 5px;
+    outline: none;
+}
+
+#senha {
+    padding: 5px;
+    outline: none;
+}
+
+.iptLogin {
+    border: 1px solid rgb(172, 171, 171);
+    padding: 9px;
+    width: 250px;
+    border-radius: 20px;
+}
+
+.lblEntrar {
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: black;
+}
+
+#usuario:focus::placeholder {
+    color: transparent;
+}
+
+#senha:focus::placeholder {
+    color: transparent;
+}
+
+.content {
+    text-align: center;
+    width: 350px;
+    box-shadow: rgb(43, 42, 42) 10px 10px 15px;
+    border-radius: 12px;
+    height: fit-content;
+    background-color: white;
+    margin-left: 700px;
+    z-index: 1;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+h3 {
+    color: black;
+    padding-top: 20px;
+    margin-bottom: -5px;
+}
+
+.footerform {
+    padding-bottom: 10px;
+}
+
+
+.footerform .social-field {
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 15px;
+    width: 100%;
+    cursor: pointer;
+    padding-top: -10px;
+}
+
+.footerform .social-field a i {
+    margin: 0 0.5rem;
+    width: 15px;
+}
+
+#googleimg {
+    max-width: 20px;
+    max-height: 15px;
+    margin-left: -7px;
+}
+
+#facebookimg {
+    max-width: 30px;
+    max-height: 20px;
+    margin-left: -15px;
+    margin-bottom: -5px;
+}
+
+.footerform .social-field a {
+    color: black;
+}
+
+.footerform .social-field .google {
+    border: 2px solid #027368;
+    border-radius: 12px;
+}
+
+.footerform .social-field .facebook {
+    border: 2px solid #027368;
+    border-radius: 12px;
+}
+
+.linha {
+    height: 30px;
+    border-right: 3px solid rgb(255, 255, 255);
+    margin: 10px;
+}

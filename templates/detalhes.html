@@ -1,14 +1,23 @@
 {% extends 'modelo.html' %}
 {% block conteudo %}
-
+<link rel="stylesheet" href="../static/styles-detalhes.css">
 <!-- abre uma caixa com H3 descricao, dados do banco de dados -->
 
 <div id="detalhes">
     <h3>{{ passeio[1] }}</h3>
     <p>Local: {{ passeio[3] }}</p>
-    <p>Detalhes: {{ passeio[2] }}</p>
+    <p>Detalhes: {{ passeio[9] }}</p>
 
+    <div id="agenda">
+        <form action="/{{ passeio[0] }}/cadAgendamento" method="POST">
+            <input type="date" name="dataAg" id="dataAg"></input>
+            <input type="number" name="qtdTurAg" id="qtdTurAg"></input>
+            <button class="btn" type="submit">Agende Já!</button>
+        </form>
+    </div>
 </div>
+
+
 
 <p class="voltar"><a href="/">Voltar para Home</a></p>
 

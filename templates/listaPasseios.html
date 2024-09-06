@@ -1,25 +1,41 @@
 {% extends 'modelo.html' %}
 {% block conteudo %}
-
+<link rel="stylesheet" href="../static/styles-listaPasseios.css">
 
 <div>
     <h1>lista de passeios!</h1>
 </div>
 
 <div id="passeios">
-    {% if not (passeios) %}
+    {% if not (agendamentos) %}
     <h2>Não há passeios cadastrados</h2>
     {% else %}
-    {% for passeio in passeios %} 
+    {% for agendamento in agendamentos %} 
 
-    <a href="/detalhes/{{ passeio[0] }}"> <!-- FAZ OS DETALHES DO PASSEIO IREM PRA OUTRA PAGINA -->
+    <a href="/detalhes/{{ agendamento[0] }}"> <!-- FAZ OS DETALHES DO PASSEIO IREM PRA OUTRA PAGINA -->
 
         <div class="boxpasseios"> 
             <img src="../static/images/imgCanion.png" style="height: 162px; width: 266px;">
 
-            <h3>{{ passeio[1] }}</h3>
-            <p>Local: {{ passeio[3] }}</p>
-            <p>Descrição: {{ passeio[2] }}</p>
+            <h3>{{ agendamento[1] }}</h3>
+            <p>Local: {{ agendamento[3] }}</p>
+            <p>Descrição: {{ agendamento[2] }}</p>
+            {% if tipo %}
+                {% if agendamento[4] %}
+                    <p>Entre em contato com seu turista</p>
+                {% else %}
+                    <form action="/{{ agendamento[0] }}/pago" method="PUT">
+                        <button class="btn" type="submit">Está pago</button>
+                    </form>
+                {% endif %}
+                
+            {% else %}
+                {% if agendamento[4] %}
+                    <p>Entre em contato com seu guia</p>
+                {% else %}
+                    <p>Aguardando confirmação de pagamento</p>
+                {% endif %}
+            {% endif %}
         </div>
     </a>
 
