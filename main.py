@@ -9,7 +9,7 @@ import mysql.connector
 conexaoDB = mysql.connector.connect(
     host="localhost",
     user="root",
-    password="aluno",
+    password="",
     database="Trevely"
 )
 
@@ -89,13 +89,19 @@ def handle_wrong_methods():
 #ROTA PARA ABRIR DETALHES DO PASSEIO
 @app.route('/detalhes/<int:id>', methods=['GET']) #Pega o passeio que o user escolheu 
 def detalhes(id):
-    comandoSQL = f'SELECT * FROM passeio WHERE idPasseio = {id}' #Seleciona o passeios em idpasseios / funciona como filtros de paginas, trazendo só oque foi selecionado 
     cursorDB = conexaoDB.cursor()
+
+    comandoSQL = f'SELECT * FROM passeio WHERE idPasseio = {id}' #Seleciona o passeios em idpasseios / funciona como filtros de paginas, trazendo só oque foi selecionado 
+     #Seleciona o passeios em idpasseios / funciona como filtros de paginas, trazendo só oque foi selecionado 
     cursorDB.execute(comandoSQL)
     passeio = cursorDB.fetchone() # fetchone apenas 1 valor
-    cursorDB.close()
+
+    comandoSQL1 = f'SELECT * FROM usuario WHERE idUsuario = {passeio[10]}'
+    cursorDB.execute(comandoSQL1)
+    dadosGuia = cursorDB.fetchone()
+    
     tipo_usuario = session.get('tipo')
-    return render_template("detalhes.html",passeio=passeio,tipo=tipo_usuario)
+    return render_template("detalhes.html",passeio=passeio,tipo=tipo_usuario, guia=dadosGuia)
 
 #ROTA PARA ABRIR CONFIRMÇÃO DE PAGAMENTO E FAZER AGENDAMENTO DO PASSEIO
 @app.route("/<int:id>/cadAgendamento", methods=['POST'])
@@ -162,41 +168,133 @@ def login():
 #ROTA DA PÁGINA LISTA PASSEIO
 @app.route('/listaPasseios')
 def lista():
-    if not verifica_sessao(): #verificação se tem sessao / um acesso login na pagina 
+    if not verifica_sessao():  # Verificação se tem sessão / um acesso login na página 
         return render_template('/login.html')
 
     tipo_usuario = session.get('tipo')
     idUsuario = session.get('idUsuario')  # Recupera o idUsuario da sessão
     
-    if tipo_usuario:
-        comandoSQL = (
-            f"SELECT ag.idAgendamento, ag.dataPasseio, ag.qtdTurAgendamento, ag.pago, ag.idUsuario, ag.idPasseio, "
-            f"p.nome, p.cepEndPasseio, p.ruaEndPasseio, p.bairroEndPasseio, p.numEndPasseio, "
-            f"p.qtdPessoas, p.valor, p.tempoPasseio, p.descricaoPasseio, p.idUsuario "
-            f"FROM agendamento ag "
-            f"JOIN passeio p ON ag.idPasseio = p.idPasseio "
-            f"WHERE p.idUsuario = {idUsuario};"
-        )
-        cursorDB = conexaoDB.cursor()  # Deixa conexão estável
-        cursorDB.execute(comandoSQL)  # Executa comando SQL
+    cursorDB = conexaoDB.cursor()  # Conexão com o banco de dados
+    
+    if tipo_usuario:  # Se for guia
+        comandoSQL = '''
+            SELECT 
+                ag.idAgendamento, 
+                ag.idUsuario, 
+                ag.dataPasseio, 
+                ag.qtdTurAgendamento,
+                p.nome, 
+                p.valor,
+                p.idUsuario, 
+                u.nome,
+                ag.idPasseio
+            FROM 
+                agendamento ag
+            JOIN 
+                passeio p ON ag.idPasseio = p.idPasseio
+            JOIN 
+                usuario u ON ag.idUsuario = u.idUsuario
+            WHERE 
+                p.idUsuario = %s;
+        '''
+        cursorDB.execute(comandoSQL, (idUsuario, ))  # Executa comando SQL
         agendamentos = cursorDB.fetchall()  # Faz uma lista com os dados
-        cursorDB.close()  # Fecha banco de dados
-        return render_template("listaPasseios.html", agendamentos=agendamentos, tipo=tipo_usuario)
-
-    else:
-        comandoSQL1 = (
-            f"SELECT ag.idAgendamento, ag.dataPasseio, ag.qtdTurAgendamento, ag.pago, ag.idUsuario, ag.idPasseio, "
-            f"p.nome, p.cepEndPasseio, p.ruaEndPasseio, p.bairroEndPasseio, p.numEndPasseio, "
-            f"p.qtdPessoas, p.valor, p.tempoPasseio, p.descricaoPasseio, p.idUsuario "
-            f"FROM agendamento ag "
-            f"JOIN passeio p ON ag.idPasseio = p.idPasseio "
-            f"WHERE ag.idUsuario = {idUsuario};"
-        )
-        cursorDB = conexaoDB.cursor()
-        cursorDB.execute(comandoSQL1)
+    else:  # Se for turista
+        comandoSQL1 = '''
+            SELECT 
+                ag.idAgendamento, 
+                ag.dataPasseio, 
+                ag.qtdTurAgendamento, 
+                ag.pago, 
+                ag.idUsuario, 
+                ag.idPasseio, 
+                p.nome, 
+                p.cepEndPasseio, 
+                p.ruaEndPasseio, 
+                p.bairroEndPasseio, 
+                p.numEndPasseio, 
+                p.qtdPessoas, 
+                p.valor, 
+                p.tempoPasseio, 
+                p.descricaoPasseio, 
+                p.idUsuario 
+            FROM 
+                agendamento ag
+            JOIN 
+                passeio p ON ag.idPasseio = p.idPasseio
+            WHERE 
+                ag.idUsuario = %s;
+        '''
+        cursorDB.execute(comandoSQL1, (idUsuario, ))  # Executa comando SQL para turistas
         agendamentos = cursorDB.fetchall()
-        cursorDB.close()
-        return render_template("listaPasseios.html", agendamentos=agendamentos, tipo=tipo_usuario)
+    
+    cursorDB.close()  # Fechar a conexão com o banco de dados
+
+    return render_template("listaPasseios.html", agendamentos=agendamentos, tipo=tipo_usuario)
+
+
+#ROTA PARA EXIBIR A DIV CONFIRMAR PAGAMENTO
+@app.route("/<int:idAgendamento>/<int:idPasseio>/<int:idGuia>/listaPasseio", methods=['GET'])
+def listaPasseios(idAgendamento, idPasseio, idGuia):
+    cursorDB = conexaoDB.cursor()
+    idUsuario = session.get('idUsuario')  # Recupera o idUsuario da sessão
+
+    # Primeiro comando SQL (Lista todos os agendamentos associados ao id do guia)
+    comandoSQL1 = '''
+        SELECT 
+            ag.idAgendamento, 
+            ag.idUsuario, 
+            ag.dataPasseio, 
+            ag.qtdTurAgendamento,
+            p.nome, 
+            p.valor,
+            p.idUsuario, 
+            u.nome,
+            ag.idPasseio
+        FROM 
+            agendamento ag
+        JOIN 
+            passeio p ON ag.idPasseio = p.idPasseio
+        JOIN 
+            usuario u ON ag.idUsuario = u.idUsuario
+        WHERE 
+            p.idUsuario = %s;
+    '''
+    cursorDB.execute(comandoSQL1, (idUsuario, ))  # Executa comando SQL
+    agendamentos = cursorDB.fetchall()  # Faz uma lista com os dados
+
+    # Segundo comando SQL para buscar agendamento específico baseado nos parâmetros da URL
+    comandoSQL = '''
+        SELECT 
+            ag.idAgendamento, 
+            ag.idUsuario, 
+            ag.dataPasseio, 
+            ag.qtdTurAgendamento,
+            p.nome AS nomePasseio, 
+            p.valor, 
+            p.idUsuario AS idGuia, 
+            u.nome AS nomeTurista
+        FROM 
+            agendamento ag
+        JOIN 
+            passeio p ON ag.idPasseio = p.idPasseio
+        JOIN 
+            usuario u ON ag.idUsuario = u.idUsuario
+        WHERE 
+            p.idUsuario = %s AND ag.idAgendamento = %s AND ag.idPasseio = %s;
+    '''
+    
+    # Usando os parâmetros da rota no comando SQL
+    cursorDB.execute(comandoSQL, (idGuia, idAgendamento, idPasseio))
+    resultadosAg = cursorDB.fetchall()  # Retorna todos os resultados da consulta
+
+    cursorDB.close()
+
+    tipo_usuario = session.get('tipo')
+
+    # Renderiza a página com os dados dos agendamentos e resultadosAg
+    return redirect("/listaPasseios", resultadosAg=resultadosAg, tipo=tipo_usuario, agendamentos=agendamentos)
+
 
 #ROTA PARA ABRIR CONFIRMÇÃO DE PAGAMENTO E FAZER AGENDAMENTO DO PASSEIO
 @app.route("/<int:id>/pago", methods=['PUT'])
@@ -219,8 +317,6 @@ def altPago(id):
         cursorDB.close()
     return redirect('/home', tipo=tipo_usuario)
     
-
-
 #REDIRECIONA PARA PAGINA GUIA
 @app.route('/redirecionarGuia', methods=['GET'])
 def redirecionar_guia():
@@ -424,4 +520,4 @@ def erro404(error):
     return redirect("/")
 
 #FINAL - RODAR O APP BONITINHO 
-app.run(debug = True) #ACESSAR ACESSO NO AR - liberação endereço publico no ar
+app.run(host='0.0.0.0', port=5000, debug = True) #ACESSAR ACESSO NO AR - liberação endereço publico no ar

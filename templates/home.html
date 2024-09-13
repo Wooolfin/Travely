@@ -2,6 +2,67 @@
 {% block conteudo %}
 <link rel="stylesheet" href="../static/styles-home.css">
 
+<div class="container mt-6">
+    <h2 class="mb-4">Top 10 da sua região!</h2>
+    
+    <div id="carouselPasseios" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicadores -->
+        <ol class="carousel-indicators">
+            <li data-bs-target="#carouselPasseios" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#carouselPasseios" data-bs-slide-to="1"></li>
+        </ol>
+
+        <!-- Slides do Carrossel -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row">
+                    {% for passeio in passeios[:4] %}
+                    <div class="col-md-3">
+                        <div class="card">
+                            <img src="../static/images/imgCanion.png" class="card-img-top" alt="Imagem do Passeio">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ passeio[1] }}</h5>
+                                <p class="card-text">{{ passeio[3] }}</p>
+                                <p class="text-success">R$ {{ passeio[7] }} por pessoa</p>
+                                <p><a href="/detalhes/{{ passeio[0] }}" class="btn btn-primary">Exibir passeio</a></p>
+                             </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row">
+                    {% for passeio in passeios[4:8] %}
+                    <div class="col-md-3">
+                        <div class="card">
+                            <img src="../static/images/imgCanion.png" class="card-img-top" alt="Imagem do Passeio">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ passeio[1] }}</h5>
+                                <p class="card-text">{{ passeio[3] }}</p>
+                                <p class="text-success">R$ {{ passeio[7] }} por pessoa</p>
+                                <p><a href="/detalhes/{{ passeio[0] }}" class="btn btn-primary">Exibir passeio</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Controles do Carrossel -->
+        <a class="carousel-control-prev" href="#carouselPasseios" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselPasseios" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Próximo</span>
+        </a>
+    </div>
+</div>
+
+
 <h1 > Nossos passeios</h1>
 <div id="passeios">
     {% if not (passeios) %}
@@ -9,16 +70,16 @@
     {% else %}
     {% for passeio in passeios %} 
 
-    <a href="/detalhes/{{ passeio[0] }}"> <!-- FAZ OS DETALHES DO PASSEIO IREM PRA OUTRA PAGINA -->
-
-        <div class="boxpasseios"> 
-            <img src="../static/images/imgCanion.png" style="height: 162px; width: 266px;">
-
+    <div> <!-- FAZ OS DETALHES DO PASSEIO IREM PRA OUTRA PAGINA -->
+        <div class="boxpasseios">
+            <a href="/detalhes/{{ passeio[0] }}">
+                <img src="../static/images/imgCanion.png" style="height: 162px; width: 266px;">
+            </a>
             <h3>{{ passeio[1] }}</h3>
             <p>Local: {{ passeio[3] }}</p>
             <p>Descrição: {{ passeio[2] }}</p>
         </div>
-    </a>
+    </div>
 
     {% endfor %}
 

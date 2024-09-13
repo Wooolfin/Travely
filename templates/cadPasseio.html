@@ -1,39 +1,63 @@
 {% extends 'modelo.html' %}
 {% block conteudo %}
-<link rel="stylesheet" href="../static/styles-cadPasseio.css">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-4">
+                <form action="/cadPasseio" method="post">
+                    <h2>Cadastro de Novo Passeio</h2>
 
-<div id="novopasseio">
-    <form action="/cadPasseio" method="post">
-        <h2>Cadastro do novo passeio</h2>
+                    <div class="mb-3">
+                        <label for="nome">Nome do Passeio:</label>
+                        <input class="form-control" type="text" name="nome" id="nome" required>
+                    </div>
 
-        <label for="nome">Nome passeio:</label><br>
-        <input class="iptCadastrar"type="text" name="nome" id="nome" required><br><br>
+                    <div class="mb-3">
+                        <label for="cepEndPasseio">CEP:</label>
+                        <input class="form-control" type="text" name="cepEndPasseio" id="cepEndPasseio" required>
+                    </div>
 
-        <label for="cepEndPasseio">CEP:</label><br>
-        <input class="iptCadastrar"type="text" name="cepEndPasseio" id="cepEndPasseio" required><br><br>
+                    <div class="mb-3">
+                        <label for="ruaEndPasseio">Rua:</label>
+                        <input class="form-control" type="text" name="ruaEndPasseio" id="ruaEndPasseio" required>
+                    </div>
 
-        <label for="ruaEndPasseio">Rua:</label><br>
-        <input class="iptCadastrar"type="text" name="ruaEndPasseio" id="ruaEndPasseio" required><br><br>
+                    <div class="mb-3">
+                        <label for="bairroEndPasseio">Bairro:</label>
+                        <input class="form-control" type="text" name="bairroEndPasseio" id="bairroEndPasseio" required>
+                    </div>
 
-        <label for="bairroEndPasseio">Bairro:</label><br>
-        <input class="iptCadastrar"type="text" name="bairroEndPasseio" id="bairroEndPasseio" required><br><br>
+                    <div class="mb-3">
+                        <label for="numEndPasseio">Número:</label>
+                        <input class="form-control" type="text" name="numEndPasseio" id="numEndPasseio" required>
+                    </div>
 
-        <label for="numEndPasseio">Numero:</label><br>
-        <input class="iptCadastrar"type="text" name="numEndPasseio" id="numEndPasseio" required><br><br>
+                    <div class="mb-3">
+                        <label for="qtdPessoas">Quantidade de Pessoas:</label>
+                        <input class="form-control" type="number" min="0" max="5" step="1" name="qtdPessoas" id="qtdPessoas" required>
+                    </div>
 
-        <label for="qtdPessoas">Quantidade de pessoas:</label><br>
-        <input class="iptCadastrar" type="number" min="0" max="5" step="1" name="qtdPessoas" id="qtdPessoas" required><br><br>
+                    <div class="mb-3">
+                        <label for="tempo">Tempo de Passeio (min):</label>
+                        <input class="form-control" type="number" name="tempo" id="tempo" required>
+                    </div>
 
-        <label for="tempo">Tempo passeio (min):</label><br>
-        <input class="iptCadastrar" type="number" name="tempo" id="tempo" required><br><br>
+                    <div class="mb-3">
+                        <label for="valor">Valor:</label>
+                        <input class="form-control" type="number" name="valor" id="valor" required>
+                    </div>
 
-        <label for="valor">Valor:</label><br>
-        <input class="iptCadastrar" type="number" name="valor" id="valor" required><br><br>
+                    <div class="mb-3">
+                        <label for="descricao">Descrição do Passeio:</label>
+                        <input class="form-control" type="text" name="descricao" id="descricao" required>
+                    </div>
 
-        <label for="descricao">Descreva mais informações o passeio:</label><br>
-        <input class="iptCadastrar" type="text" name="descricao" id="descricao" required ></input><br>
-
-        <input class="btnCadastrar" type="submit" value="Cadastrar Passeio">
-    </form>
+                    <div class="text-center">
+                        <button class="btn btn-success w-100" type="submit">Cadastrar Passeio</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

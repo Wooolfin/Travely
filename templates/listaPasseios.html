@@ -1,27 +1,86 @@
 {% extends 'modelo.html' %}
 {% block conteudo %}
-<link rel="stylesheet" href="../static/styles-listaPasseios.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles-listaPasseios.css') }}">
 
-<div>
-    <h1>lista de passeios!</h1>
-</div>
+{% if not (agendamentos) %}
+    <h2>Não há agendamentos cadastrados</h2>
+{% else %}
+    <div class="container mt-8"></div>
+        <h2 class="mb-4">Agendamentos do mês</h2>
+        
+        <div id="carouselPasseios" class="carousel slide">
+            <!-- Indicadores -->
+            <ol class="carousel-indicators">
+                <li data-bs-target="#carouselPasseios" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#carouselPasseios" data-bs-slide-to="1"></li>
+            </ol>
+
+            <!-- Slides do Carrossel -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        {% for agendamento in agendamentos[:4] %}
+                        <div class="col-md-3">
+                            <div class="card">
+                                <img src="../static/images/imgCanion.png" class="card-img-top" alt="Imagem do Passeio">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ agendamento[2] }} - {{ agendamento[4] }}</h5>
+                                    <p class="card-text">{{ agendamento[7] }} - resevando para {{ agendamento[3] }}
+                                    <p><a href="{{ agendamento[0] }}/{{ agendamento[8] }}/{{ agendamento[6] }}/listaPasseio" class="btn btn-primary">Exibir todos agendamentos</a></p>
+                                    <p class="text-success">R$ {{ agendamento[5] }} por pessoa</p>
+                                    <p class="text-success">Total:R$ </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        {% for agendamento in agendamentos[4:8] %}
+                        <div class="col-md-3">
+                            <div class="card">
+                                <img src="../static/images/imgCanion.png" class="card-img-top" alt="Imagem do Passeio">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ agendamento[2] }} - {{ agendamento[4] }}</h5>
+                                    <p class="card-text">{{ agendamento[7] }} - resevando para {{ agendamento[3] }}
+                                    <p><a href="/detalhes/{{ agendamento[0] }}" class="btn btn-primary">Agendar</a></p>
+                                    <p class="text-success">R$ {{ agendamento[5] }} por pessoa</p>
+                                    <p class="text-success">Total:R$ </p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles do Carrossel -->
+            <a class="carousel-control-prev" href="#carouselPasseios" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselPasseios" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+            </a>
+        </div>
+    </div>
+
 
 <div id="passeios">
-    {% if not (agendamentos) %}
-    <h2>Não há passeios cadastrados</h2>
-    {% else %}
-    {% for agendamento in agendamentos %} 
+    {% for resultadoAg in resultadosAg %} 
 
-    <a href="/detalhes/{{ agendamento[0] }}"> <!-- FAZ OS DETALHES DO PASSEIO IREM PRA OUTRA PAGINA -->
+    <a> <!-- FAZ OS DETALHES DO PASSEIO IREM PRA OUTRA PAGINA -->
 
         <div class="boxpasseios"> 
             <img src="../static/images/imgCanion.png" style="height: 162px; width: 266px;">
 
-            <h3>{{ agendamento[1] }}</h3>
-            <p>Local: {{ agendamento[3] }}</p>
-            <p>Descrição: {{ agendamento[2] }}</p>
-            {% if tipo %}
-                {% if agendamento[4] %}
+            <h3>PASSEIO: {{ resultadoAg[4] }} - DATA: {{ resultadoAg[3] }}</h3>
+            <p>Turista: {{ resultadoAg[7] }}</p>
+            <p>R${{ resultadoAg[5] }} x {{ resultadoAg[3] }} pessoas.</p>
+            <!-- {% if tipo %}
+                {% if resultadoAg[4] %}
                     <p>Entre em contato com seu turista</p>
                 {% else %}
                     <form action="/{{ agendamento[0] }}/pago" method="PUT">
@@ -35,7 +94,7 @@
                 {% else %}
                     <p>Aguardando confirmação de pagamento</p>
                 {% endif %}
-            {% endif %}
+            {% endif %} -->
         </div>
     </a>
 

@@ -1,24 +1,94 @@
 {% extends 'modelo.html' %}
 {% block conteudo %}
 <link rel="stylesheet" href="../static/styles-detalhes.css">
-<!-- abre uma caixa com H3 descricao, dados do banco de dados -->
 
-<div id="detalhes">
-    <h3>{{ passeio[1] }}</h3>
-    <p>Local: {{ passeio[3] }}</p>
-    <p>Detalhes: {{ passeio[9] }}</p>
+<div class="container mt-5">
+    <div class="row">
+        <!-- Imagens do Passeio -->
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="https://via.placeholder.com/400x250" class="img-fluid mb-3" alt="Imagem do Passeio">
+                </div>
+                <div class="col-md-6">
+                    <img src="https://via.placeholder.com/400x250" class="img-fluid mb-3" alt="Imagem do Passeio">
+                </div>
+                <div class="col-md-6">
+                    <img src="https://via.placeholder.com/400x250" class="img-fluid mb-3" alt="Imagem do Passeio">
+                </div>
+                <div class="col-md-6">
+                    <img src="https://via.placeholder.com/400x250" class="img-fluid mb-3" alt="Imagem do Passeio">
+                </div>
+            </div>
+            <h3>{{ passeio[1] }}</h3>
+            <p><strong>Local:</strong> {{ passeio[3] }}</p>
+            <p><strong>Duração:</strong> 1h30min</p>
+            <p><strong>Guia:</strong> {{ guia[1] }} , SuperGuia - 3 anos no app</p>
+            <p>{{ passeio[9] }}</p>
 
-    <div id="agenda">
-        <form action="/{{ passeio[0] }}/cadAgendamento" method="POST">
-            <input type="date" name="dataAg" id="dataAg"></input>
-            <input type="number" name="qtdTurAg" id="qtdTurAg"></input>
-            <button class="btn" type="submit">Agende Já!</button>
-        </form>
+            <!-- Botão Mostrar mais -->
+            <button class="btn btn-link">Mostrar mais</button>
+        </div>
+
+        <!-- Caixa de Reservas -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ passeio[7] }} por pessoa</h5>
+
+                    <form action="/{{ passeio[0] }}/cadAgendamento" method="POST">
+                        <div class="form-group mb-3">
+                            <label for="dataAg">Data</label>
+                            <input type="date" class="form-control" name="dataAg" id="dataAg" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="qtdTurAg">Turistas</label>
+                            <select class="form-control" name="qtdTurAg" id="qtdTurAg">
+                                <option>1 pessoa</option>
+                                <option>2 pessoas</option>
+                                <option>3 pessoas</option>
+                                <option>4 pessoas</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Agende já</button>
+                    </form>
+
+                    <div class="mt-3">
+                        <p>R$ {{ passeio[7] }} x 1 pessoa = {{ passeio[7] }}</p>
+                        <h5 class="mt-3">Valor total: R$ {{ passeio[7] }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avaliações do Passeio -->
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h4>Avaliações do Passeio</h4>
+            <div class="d-flex flex-row mb-3">
+                <div class="card me-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">João Pedro</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Piauí, Brasil</h6>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fez um passeio 1 semana atrás.</p>
+                        <button class="btn btn-link">Mostrar mais</button>
+                    </div>
+                </div>
+
+                <div class="card me-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Augusto José</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Piauí, Brasil</h6>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fez um passeio 1 semana atrás.</p>
+                        <button class="btn btn-link">Mostrar mais</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-
-
-<p class="voltar"><a href="/">Voltar para Home</a></p>
 
 {% endblock %}

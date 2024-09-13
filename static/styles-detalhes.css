@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo:wght@700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Vampiro+One&display=swap');
+
+:root {
+    --cor-primaria: #027368; 
+    --cor-secundaria: #5E4333; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Istok', sans-serif;
+}
+
+#detalhes{
+    width: 30%;
+    min-width: 100px;
+    box-shadow: 0px 0px 100px #a4a4a4a4;
+    border-radius: 15px;
+    margin: 10px auto 0 auto;
+    padding: 2%;
+    justify-content: center;
+    display: flex;
+    overflow-wrap: break-word;
+    flex-direction: column;
+}
+#detalhes h3, p { /*coloca uma margem nos textos*/
+    margin-bottom: 30px;
+}
+
+.agenda{
+    
+}
