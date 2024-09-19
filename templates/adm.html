@@ -1,51 +1,59 @@
 {% extends 'modelo.html' %} 
 {% block conteudo %}
-<div class="logout">
-  <p>
-    Olá Guia {{ usuario_informado }}
-    <a href="/logout">
-      <button class="btn btn-danger" type="submit">Sair</button>
+<link rel="stylesheet" href="../static/styles-adm.css">
+
+
+
+<div class="d-flex justify-content-around w-100 align-items-center">
+  <p>Olá, {{ usuario[0] }}</p>
+
+  <div class="d-flex justify-content-end align-items-center">
+    <a href="/cadpasseio">
+      <button class="btn btn-success" type="submit">Cadastrar Passeio</button>
     </a>
-  </p>
+
+    <a href="/logout">
+        <button class="btn btn-danger" type="submit" id="sair">Sair</button>
+    </a>
+  </div>
 </div>
 
+
+
 {% if tipo %}
-<div class="row">
+<div id="passeios">
   {% if not(passeios) %}
   <h2>Não há passeios cadastrados</h2>
   {% else %} 
     {% for passeio in passeios %}
-    <div class="col-md-4 mb-4">
-    <div class="card">
-      <a href="/detalhes/{{ passeio[0] }}">
-        <img
-          src="../static/images/imgCanion.png"
-          class="card-img-top"
-          alt="Imagem do Passeio"
-        />
-      </a>
-      <div class="card-body">
-        <h5 class="card-title">{{ passeio[1] }}</h5>
-        <p class="card-text">Local: {{ passeio[3] }}</p>
-        <p class="card-text">Descrição: {{ passeio[2] }}</p>
-        <a
-          href="/deletar/{{ passeio[0] }}"
-          class="btn btn-danger"
-          onclick="return confirm('Tem certeza?')"
-          >Excluir</a
-        >
-        <a href="/editPasseio/{{ passeio[0] }}" class="btn btn-primary"
-          >Editar</a
-        >
+    <div>
+      <div class="boxpasseios">
+        <a href="/detalhes/{{ passeio[0] }}">
+          <img
+            src="../static/images/img{{ passeio[0] }}.png"
+            class="boxpasseios-image"/>
+        </a>
+        <div class="boxpasseios-info">
+          <h5 class="card-title">{{ passeio[1] }}</h5>
+          <p class="card-text">{{ passeio[3] }} - {{ passeio[2] }}</p>
+          <p class="card-text">Categoria: {{ passeio[7] }}</p>
+          <p class="text-success">R$ {{ passeio[6] }} por pessoa</p>
+          <a href="/editPasseio/{{ passeio[0] }}" class="btn btn-primary">
+            Editar
+          </a>
+          <a
+            href="/deletar/{{ passeio[0] }}"
+            class="btn btn-danger "
+            onclick="return confirm('Tem certeza?')"
+            >Excluir</a
+          >
+        </div>
       </div>
-    </div>
     </div>
     {% endfor %} 
   {% endif %}
 </div>
-<a href="/cadpasseio" class="btn btn-success">Cadastrar Passeio</a>
-{% endif %}
 
-<a href="/" class="btn btn-secondary mt-4">Voltar para Home</a>
+{% endif %}
 
 {% endblock %}

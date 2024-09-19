@@ -26,7 +26,22 @@ def verifica_sessao():
 #HOMEPAGE
 @app.route('/')
 def home():
-    comandoSQL = 'SELECT * FROM passeio' #comando sql
+    comandoSQL ='''SELECT 
+        p.idPasseio,
+        p.nome AS nomePasseio,
+        p.estadoPasseio,
+        p.cidadePasseio,
+        p.bairroEndPasseio,
+        p.qtdPessoas,
+        p.valor,
+        c.nome,
+        p.tempoPasseio,
+        p.descricaoPasseio
+    FROM 
+        passeio p
+    JOIN 
+        categoria c ON p.categoria = c.idCategoria;
+    '''
     cursorDB = conexaoDB.cursor() #deixa conexao estavel
     cursorDB.execute(comandoSQL) #executa comando sql
     passeios = cursorDB.fetchall()#faz uma lista com os dados
@@ -47,13 +62,13 @@ def novopasseio():
 @app.route("/cadPasseio", methods=['POST'])
 def cadpasseio():
     nome = request.form['nome']
-    cepEndPasseio = request.form['cepEndPasseio']
-    ruaEndPasseio = request.form['ruaEndPasseio']
+    estadoPasseio = request.form['estadoPasseio']
+    cidadePasseio = request.form['cidadePasseio']
     bairroEndPasseio = request.form['bairroEndPasseio']
-    numEndPasseio = request.form['numEndPasseio']
     qtdPessoas = request.form['qtdPessoas']
-    tempo = request.form['tempo']  # Supondo que seja no formato HH:MM:SS
     valor = request.form['valor']
+    tempo = request.form['tempo']
+    categoria = request.form['categoria']
     descricao = request.form['descricao']
     
     idUsuario = session.get('idUsuario')  # Recupera o idGuia da sessão
@@ -63,10 +78,10 @@ def cadpasseio():
     
     # Query SQL ajustada para corresponder à estrutura da tabela
     comandoSQL = '''
-    INSERT INTO passeio (nome, cepEndPasseio, ruaEndPasseio, bairroEndPasseio, numEndPasseio, qtdPessoas, valor, tempoPasseio, descricaoPasseio, idUsuario)
+    INSERT INTO passeio (nome, estadoPasseio, cidadePasseio, bairroEndPasseio, qtdPessoas, valor, tempo, categoria, descricao, idUsuario)
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     '''
-    valores = (nome, cepEndPasseio, ruaEndPasseio, bairroEndPasseio, numEndPasseio, qtdPessoas, valor, tempo, descricao, idUsuario)
+    valores = (nome, estadoPasseio, cidadePasseio, bairroEndPasseio, qtdPessoas, valor, tempo, categoria, descricao, idUsuario)
 
     try:
         cursorDB = conexaoDB.cursor()
@@ -86,60 +101,128 @@ def cadpasseio():
 def handle_wrong_methods():
     return redirect('/') # Trata todos os outros métodos, redirecionando para a página inicial (/).
 
-#ROTA PARA ABRIR DETALHES DO PASSEIO
-@app.route('/detalhes/<int:id>', methods=['GET']) #Pega o passeio que o user escolheu 
-def detalhes(id):
+@app.route('/detalhes/<int:id>', methods=['GET', 'POST'])
+def detalhes(id):   
     cursorDB = conexaoDB.cursor()
 
-    comandoSQL = f'SELECT * FROM passeio WHERE idPasseio = {id}' #Seleciona o passeios em idpasseios / funciona como filtros de paginas, trazendo só oque foi selecionado 
-     #Seleciona o passeios em idpasseios / funciona como filtros de paginas, trazendo só oque foi selecionado 
-    cursorDB.execute(comandoSQL)
-    passeio = cursorDB.fetchone() # fetchone apenas 1 valor
+    if request.method == 'POST':
+        # Pegando o valor selecionado de qtdTurAg
+        qtdTurAg = int(request.form.get('qtdTurAg', 1))
+        
+        # Seleciona o valor do passeio para calcular o total
+        comandoSQL = f'SELECT valor FROM passeio WHERE idPasseio = {id}'
+        cursorDB.execute(comandoSQL)
+        valor_passeio = cursorDB.fetchone()[0]  # Asume que o resultado é uma tupla com um único valor
+        
+        # Calculando o valor total
+        total = valor_passeio * qtdTurAg
+    else:
+        comandoSQL = f'SELECT valor FROM passeio WHERE idPasseio = {id}'
+        cursorDB.execute(comandoSQL)
+        valor_passeio = cursorDB.fetchone()[0]  # Asume que o resultado é uma tupla com um único valor
+        total = valor_passeio
+        qtdTurAg = 1
 
-    comandoSQL1 = f'SELECT * FROM usuario WHERE idUsuario = {passeio[10]}'
-    cursorDB.execute(comandoSQL1)
+    # Informações do passeio para visualização
+    comandoSQL = f'SELECT * FROM passeio WHERE idPasseio = {id}'
+    cursorDB.execute(comandoSQL)
+    passeio = cursorDB.fetchone()
+
+    # Informações do guia
+    comandoSQL = f'SELECT * FROM usuario WHERE idUsuario = {passeio[10]}'
+    cursorDB.execute(comandoSQL)
     dadosGuia = cursorDB.fetchone()
     
+    # Informações para o carrossel de outros passeios
+    comandoSQL = '''SELECT 
+        p.idPasseio,
+        p.nome AS nomePasseio,
+        p.estadoPasseio,
+        p.cidadePasseio,
+        p.bairroEndPasseio,
+        p.qtdPessoas,
+        p.valor,
+        c.nome AS categoriaNome,
+        p.tempoPasseio,
+        p.descricaoPasseio
+    FROM 
+        passeio p
+    JOIN 
+        categoria c ON p.categoria = c.idCategoria;'''
+    cursorDB.execute(comandoSQL)
+    pCarrossel = cursorDB.fetchall()
+
     tipo_usuario = session.get('tipo')
-    return render_template("detalhes.html",passeio=passeio,tipo=tipo_usuario, guia=dadosGuia)
-
-#ROTA PARA ABRIR CONFIRMÇÃO DE PAGAMENTO E FAZER AGENDAMENTO DO PASSEIO
-@app.route("/<int:id>/cadAgendamento", methods=['POST'])
-def cadAgendamento(id):
-    comandoSQL1 = f'SELECT * FROM passeio WHERE idPasseio = {id}'
-    cursorDB = conexaoDB.cursor()
-    cursorDB.execute(comandoSQL1)
-    passeio = cursorDB.fetchone() # fetchone apenas 1 valor
     cursorDB.close()
+
+    # Renderizando o template com todos os dados necessários
+    return render_template("detalhes.html", passeio=passeio, pCarrossel=pCarrossel, tipo=tipo_usuario, guia=dadosGuia, total=total, qtdTurAg=qtdTurAg, id=id)
+
+#ROTA PARA O TURISTA CONFIRMAR AGENDAMENTO
+@app.route("/confirmaPag/<int:id>", methods=['GET', 'POST'])
+def confirmaPag(id):
+    cursorDB = conexaoDB.cursor()
+            # Obter detalhes do passeio para exibição
+    comandoSQL = f'SELECT * FROM passeio WHERE idPasseio = {id}'
+    cursorDB.execute(comandoSQL)
+    passeio = cursorDB.fetchone()
+
+    if request.method == 'POST':
+        # Captura a quantidade de turistas e a data do agendamento do formulário
+        qtdTurAg = int(request.form.get('qtdTurAg', 1))
+        # Calcula o valor total com base na quantidade de turistas
+        total = passeio[6] * qtdTurAg  # Assumindo que passeio[6] é o valor do passeio
+
+        # Renderizar a página de confirmação com o valor calculado
+        return render_template("confirmaPag.html", passeio=passeio, total=total, qtdTurAg=qtdTurAg)
+
+    # Se o método for GET, apenas exibe a página com os detalhes do passeio
+    else:
+        comandoSQL = f'SELECT valor FROM passeio WHERE idPasseio = {id}'
+        cursorDB.execute(comandoSQL)
+        valor_passeio = cursorDB.fetchone()[0]
+        total = valor_passeio
+        qtdTurAg = 1
+
+        return render_template("confirmaPag.html", passeio=passeio, total=total, qtdTurAg=qtdTurAg)
+
+@app.route("/confirmarAgendamento/<int:id>", methods=['POST'])
+def confirmarAgendamento(id):
+    cursorDB = conexaoDB.cursor()
+    idUsuario = session.get('idUsuario')  # Recupera o id do usuário da sessão
+
+    # Captura os valores enviados pelo formulário
+    qtdTurAg = int(request.form.get('qtdTurAg', 1))
     dataAg = request.form['dataAg']
-    qtdTurAg = request.form['qtdTurAg']
-    
-    idUsuario = session.get('idUsuario')  # Recupera o idGuia da sessão
-    pago = False
-    
 
-    if idUsuario is None:
-        return render_template('error.html', msg="ID do Guia não fornecido ou usuário não autenticado.")
-    
-    # Query SQL ajustada para corresponder à estrutura da tabela
-    comandoSQL = '''
-    INSERT INTO agendamento (dataPasseio, qtdTurAgendamento, pago, idUsuario, idPasseio)
-    VALUES (%s, %s, %s, %s, %s)
+    # Obter detalhes do passeio
+    comandoSQL = f'SELECT * FROM passeio WHERE idPasseio = {id}'
+    cursorDB.execute(comandoSQL)
+    passeio = cursorDB.fetchone()
+
+    # Inserir em agendamento
+    comandoInsert = '''
+    INSERT INTO agendamento (qtdTurAgendamento, pago, idPasseio, idTurista)
+    VALUES (%s, %s, %s, %s);
     '''
-    valores = (dataAg, qtdTurAg, pago, idUsuario, passeio[0])
-
-    try:
-        cursorDB = conexaoDB.cursor()
-        cursorDB.execute(comandoSQL, valores)
-        conexaoDB.commit()
-    except mysql.connector.IntegrityError as err:
-        print(f"Error: {err}")
-        conexaoDB.rollback()
-        return render_template('error.html', msg="Erro de integridade ao tentar cadastrar o passeio.")
-    finally:
-        cursorDB.close()
+    cursorDB.execute(comandoInsert, (qtdTurAg, False, id, idUsuario))
+    idAgendamento = cursorDB.lastrowid  # Captura o ID do agendamento inserido
     
-    return redirect('/adm')
+    # Calcula o valor total com base na quantidade de turistas
+    total = passeio[6] * qtdTurAg  # Assumindo que passeio[6] é o valor do passeio
+    
+    # Inserir em grupopasseios com a data do agendamento
+    comandoInsert1 = '''
+    INSERT INTO grupopasseios (dataAgendamento, idAgendamento, idTuristaAg, vTotal)
+    VALUES (%s, %s, %s, %s);
+    '''
+    cursorDB.execute(comandoInsert1, (dataAg, idAgendamento, idUsuario, total))
+    
+    # Confirmar as inserções no banco de dados
+    conexaoDB.commit()
+    
+    return redirect("/home")  # Redirecionar para página de confirmação ou sucesso
+
 
 #ROTA DA PÁGINA ADMINISTRATIVA
 @app.route('/adm')
@@ -150,12 +233,18 @@ def adm():
     idUsuario = session.get('idUsuario')  # Recupera o idUsuario da sessão
     tipo_usuario = session.get('tipo')
 
-    comandoSQL = f'SELECT * FROM passeio WHERE idUsuario = {idUsuario} ORDER BY idPasseio DESC '
+    comandoSQL1 = f'SELECT nome FROM usuario WHERE idUsuario = {idUsuario}'
+    cursorDB = conexaoDB.cursor()
+    cursorDB.execute(comandoSQL1)
+    usuario = cursorDB.fetchone()
+
+
+    comandoSQL = f'SELECT * FROM passeio WHERE idGuia = {idUsuario} ORDER BY idPasseio DESC '
     cursorDB = conexaoDB.cursor()
     cursorDB.execute(comandoSQL)
     passeios = cursorDB.fetchall()
     cursorDB.close()
-    return render_template("adm.html",passeios=passeios, tipo=tipo_usuario )
+    return render_template("adm.html",passeios=passeios, tipo=tipo_usuario , usuario=usuario)
 
 #ROTA DA PÁGINA DE LOGIN
 @app.route('/login')
@@ -177,64 +266,70 @@ def lista():
     cursorDB = conexaoDB.cursor()  # Conexão com o banco de dados
     
     if tipo_usuario:  # Se for guia
+
+    # Consulta SQL para buscar os agendamentos de acordo com a data
         comandoSQL = '''
             SELECT 
+                gp.idGrupoPasseios,
+                gp.dataAgendamento,
+                p.nome,
                 ag.idAgendamento, 
-                ag.idUsuario, 
-                ag.dataPasseio, 
-                ag.qtdTurAgendamento,
-                p.nome, 
-                p.valor,
-                p.idUsuario, 
-                u.nome,
-                ag.idPasseio
-            FROM 
-                agendamento ag
-            JOIN 
-                passeio p ON ag.idPasseio = p.idPasseio
-            JOIN 
-                usuario u ON ag.idUsuario = u.idUsuario
-            WHERE 
-                p.idUsuario = %s;
-        '''
-        cursorDB.execute(comandoSQL, (idUsuario, ))  # Executa comando SQL
-        agendamentos = cursorDB.fetchall()  # Faz uma lista com os dados
-    else:  # Se for turista
-        comandoSQL1 = '''
-            SELECT 
-                ag.idAgendamento, 
-                ag.dataPasseio, 
                 ag.qtdTurAgendamento, 
                 ag.pago, 
-                ag.idUsuario, 
-                ag.idPasseio, 
-                p.nome, 
-                p.cepEndPasseio, 
-                p.ruaEndPasseio, 
-                p.bairroEndPasseio, 
-                p.numEndPasseio, 
-                p.qtdPessoas, 
+                gp.vTotal,
                 p.valor, 
-                p.tempoPasseio, 
-                p.descricaoPasseio, 
-                p.idUsuario 
+                u.nome AS nomeTurista, 
+                u.email
             FROM 
-                agendamento ag
+                grupopasseios gp
             JOIN 
-                passeio p ON ag.idPasseio = p.idPasseio
-            WHERE 
-                ag.idUsuario = %s;
+                agendamento ag ON gp.idAgendamento = ag.idAgendamento 
+            JOIN 
+                passeio p ON ag.idPasseio = p.idPasseio 
+            JOIN 
+                usuario u ON ag.idTurista = u.idUsuario 
+            ORDER BY 
+                gp.dataAgendamento;
+            '''
+
+            # Executa a consulta com a data fornecida
+        cursorDB.execute(comandoSQL)
+        agendamentos = cursorDB.fetchall()
+
+    else:  # Se for turista
+        #COMANDO TESTE PARA  NÃO DAR ERRO
+        comandoSQL1 = '''
+            SELECT 
+                gp.idGrupoPasseios,
+                gp.dataAgendamento,
+                p.nome,
+                ag.idAgendamento, 
+                ag.qtdTurAgendamento, 
+                ag.pago, 
+                gp.vTotal,
+                p.valor, 
+                u.nome AS nomeTurista, 
+                u.email
+            FROM 
+                grupopasseios gp
+            JOIN 
+                agendamento ag ON gp.idAgendamento = ag.idAgendamento 
+            JOIN 
+                passeio p ON ag.idPasseio = p.idPasseio 
+            JOIN 
+                usuario u ON ag.idTurista = u.idUsuario 
+            ORDER BY 
+                gp.dataAgendamento;
         '''
-        cursorDB.execute(comandoSQL1, (idUsuario, ))  # Executa comando SQL para turistas
+        cursorDB.execute(comandoSQL1)  # Executa comando SQL para turistas
         agendamentos = cursorDB.fetchall()
     
     cursorDB.close()  # Fechar a conexão com o banco de dados
 
     return render_template("listaPasseios.html", agendamentos=agendamentos, tipo=tipo_usuario)
 
-
 #ROTA PARA EXIBIR A DIV CONFIRMAR PAGAMENTO
-@app.route("/<int:idAgendamento>/<int:idPasseio>/<int:idGuia>/listaPasseio", methods=['GET'])
+@app.route("/listaPasseio/<int:idAgendamento>/<int:idPasseio>/<int:idGuia>/", methods=['GET'])
 def listaPasseios(idAgendamento, idPasseio, idGuia):
     cursorDB = conexaoDB.cursor()
     idUsuario = session.get('idUsuario')  # Recupera o idUsuario da sessão
@@ -293,8 +388,7 @@ def listaPasseios(idAgendamento, idPasseio, idGuia):
     tipo_usuario = session.get('tipo')
 
     # Renderiza a página com os dados dos agendamentos e resultadosAg
-    return redirect("/listaPasseios", resultadosAg=resultadosAg, tipo=tipo_usuario, agendamentos=agendamentos)
-
+    return render_template("listaPasseios.html", resultadosAg=resultadosAg, tipo=tipo_usuario, agendamentos=agendamentos)
 
 #ROTA PARA ABRIR CONFIRMÇÃO DE PAGAMENTO E FAZER AGENDAMENTO DO PASSEIO
 @app.route("/<int:id>/pago", methods=['PUT'])
@@ -316,7 +410,7 @@ def altPago(id):
     finally:
         cursorDB.close()
     return redirect('/home', tipo=tipo_usuario)
-    
+
 #REDIRECIONA PARA PAGINA GUIA
 @app.route('/redirecionarGuia', methods=['GET'])
 def redirecionar_guia():
