@@ -36,12 +36,102 @@
     overflow-wrap: break-word;
     flex-direction: column;
 }
-#detalhes h3, p { /*coloca uma margem nos textos*/
-    margin-bottom: 30px;
+#detalhes h3, p {
+    margin-bottom: 0px;
 }
 
 .boxdetalhes-detalhes{
     border-radius: 10px;
     height: 49%;
     width: 258px;
+}
+
+#imgGuia{
+    width: 60px;
+    border-radius: 40px;
+}
+
+.card-body {
+    flex: none;
+    padding: 1rem 1rem;
+}
+
+.card {
+    padding: 10px;
+    width: 328px;
+    min-height: 400px;
+    background-color: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+}
+.card-img, .card-img-bottom, .card-img-top {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+}
+.card-title {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.price {
+    font-size: 1.2rem;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.carousel-control-next{
+    transition: none;
+    justify-content: end;
+} 
+
+.carousel-control-prev {
+    transition: none;
+    justify-content: start;
+}
+
+.carousel-inner .carousel-item {
+    transition: transform 4s ease, opacity 2s linear;
+}
+
+.carousel-indicators [data-bs-target]{
+    background-color: #000;
+}
+
+.card-img, .card-img-bottom, .card-img-top {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.container {
+    max-width: 100%;
+}
+
+#cardPag {
+    padding: 10px;
+    background-color: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    height: min-content;
+}
+
+.btn{
+    border-radius: 0.75rem;
 }

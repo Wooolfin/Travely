@@ -18,6 +18,10 @@
     border-radius: 10px;
 }
 
-.notice {
+#adc {
+    color: black;       
+}
 
+#adc:hover {
+    text-decoration: underline;
 }

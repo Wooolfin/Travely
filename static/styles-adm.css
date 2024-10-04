@@ -47,7 +47,7 @@ a{
 }
 
 button{
-    background-color: #027368;
+    background-color: var(--cor-primaria);
     border-radius: 4px;
     box-sizing: border-box;
     color: white;
@@ -59,7 +59,7 @@ button{
 }
 
 .btnSair {
-    background-color: #027368;
+    background-color: var(--cor-primaria);
     border-radius: 4px;
     box-sizing: border-box;
     color: white;
@@ -81,7 +81,7 @@ button{
 }
 
 button:hover{
-    background: #01b19f;
+    background: var(--cor-primaria);
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19)
 }
 
@@ -176,8 +176,8 @@ button:hover{
 
 .btn-success {
     color: #fff;
-    background-color: #198754;
-    border-color: #198754;
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
     width: 160px;
     border-radius: 12px; 
     font-size: 14px;
@@ -191,3 +191,8 @@ button:hover{
     font-style: normal;
 }
 
+.btn-success:hover {
+    color: var(--cor-primaria);
+    background-color: white;
+    border-color: var(--cor-primaria);
+}

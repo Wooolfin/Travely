@@ -18,18 +18,30 @@
 
         <div class="d-flex mt-4 justify-content-between row">
             <div id="agende" class="col-md-6">
-                <h3><strong>{{ passeio[1] }}</strong></h3>
-                <p><strong>Local:</strong> {{ passeio[3] }}</p>
-                <p><strong>Duração:</strong> {{ passeio[7] }} min</p>
-                <p><strong>Guia:</strong> {{ guia[1] }} , SuperGuia - 3 anos no app</p>
-                <p>{{ passeio[9] }}</p>
-    
-                <!-- Botão Mostrar mais -->
-                <button class="btn btn-link">Mostrar mais</button>
+                <h3 ><strong>{{ passeio[1] }}</strong></h3>
+                <div id="boxDescDetalhes" class="ps-2 py-4 d-flex  align-items-center border-bottom">
+                    <img src="../static/images/guiaGabriel.png" id="imgGuia" class="boxdetalhes-detalhes "/>
+                    <p class="ps-2"><strong>Guia:</strong> {{ guia[1] }}</p>
+                </div>
+                <div class="py-4 border-bottom">
+                    <div class="d-flex justify-content-center">
+                        <h4>Sobre o passeio</h4>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <p class="ps-2"><strong>Bairro:</strong> {{ passeio[4] }} </p>
+                        <p class="ps-2"><strong>Cidade:</strong> {{ passeio[3] }} / {{ passeio[2] }} </p>                      
+                    </div>
+                    <div class="d-flex justify-content-around pt-2">
+                        <p class="ps-2"><strong>Duração:</strong> {{ passeio[7] }} min</p>
+                        <p class="ps-2"><strong>Turistas:</strong> {{ passeio[5] }} </p>
+                    </div>
+                    <p class="p-2 mt-5 text-center">{{ passeio[9] }}</p>
+                </div>
+                
             </div>
             <!-- Caixa de Reservas -->
-            <div class="col-md-4">
-                <div class="card">
+            <div class="col-md-6 d-flex justify-content-center">
+                <div class="col-md-8" id="cardPag">
                     <div class="card-body">
                         <h5 class="card-title"><strong>{{ passeio[1] }}</strong></h5>
 
@@ -44,11 +56,12 @@
                                 </select>
                             </div>
                             
-                            <div class="mt-3">
+                            <div class="text-center mt-3">
                                 <p>R$ {{ valor }} x {{ qtdTurAg }} pessoa(s) = R$ {{ total }}</p>
                                 <h5 class="mt-3">Valor total: R$ {{ total }}</h5>
+                                <a href="/confirmaPag/{{ passeio[0] }}" class="btn btn-primary col-md-8">Agende já</a>
                             </div>
-                            <a href="/confirmaPag/{{ passeio[0] }}" class="btn btn-primary w-100">Agende já</a>
+                            
                         </form>  
                     </div>
                 </div>
@@ -56,11 +69,12 @@
         </div>
 
     <!-- Avaliações do Passeio -->
-    <div class="row mt-5">
+    <div class="container mt-4">
+        
         <div class="col-md-12">
-            <h4>Avaliações do Passeio</h4>
-            <div class="d-flex flex-row mb-3">
-                <div class="card me-3" style="width: 18rem;">
+            <h4 class="col-md-6">Avaliações do Passeio</h4>
+            <div class="d-flex flex-row justify-content-around mb-3">
+                <div class="card col-md-3">
                     <div class="card-body">
                         <h5 class="card-title">João Pedro</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Piauí, Brasil</h6>
@@ -69,9 +83,17 @@
                     </div>
                 </div>
 
-                <div class="card me-3" style="width: 18rem;">
+                <div class="card col-md-3">
                     <div class="card-body">
                         <h5 class="card-title">Augusto José</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Piauí, Brasil</h6>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fez um passeio 1 semana atrás.</p>
+                        <button class="btn btn-link">Mostrar mais</button>
+                    </div>
+                </div>
+                <div class="card col-md-3">
+                    <div class="card-body">
+                        <h5 class="card-title">João Pedro</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Piauí, Brasil</h6>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fez um passeio 1 semana atrás.</p>
                         <button class="btn btn-link">Mostrar mais</button>
@@ -82,65 +104,72 @@
     </div>
 </div>
 
-<div class="container mt-6">
-    <h2 class="mb-4">Mais passeios que possam te interessar</h2>
-    <div id="carouselPasseios" class="carousel slide" data-bs-ride="carousel">
-        <!-- Indicadores -->
-        <ol class="carousel-indicators">
-            <li data-bs-target="#carouselPasseios" data-bs-slide-to="0" class="active"></li>
-            <li data-bs-target="#carouselPasseios" data-bs-slide-to="1"></li>
-        </ol>
-
-        <!-- Slides do Carrossel -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="row">
-                    {% for pCarrossel in pCarrossel[:4] %}
-                    <div class="col-md-3">
-                        <div class="card">
-                            <img src="../static/images/imgCanion.png" class="card-img-top" alt="Imagem do Passeio">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ pCarrossel[1] }}</h5>
-                                <p class="card-text">{{ pCarrossel[3] }} - {{ pCarrossel[2] }}</p>
-                                <p class="card-text">Categoria: {{ pCarrossel[7] }}</p>
-                                <p class="text-success">R$ {{ pCarrossel[6] }} por pessoa</p>
-                                <p><a href="/detalhes/{{ pCarrossel[0] }}" class="btn btn-primary">Exibir passeio</a></p>
-                             </div>
+<div class="container mt-4">
+    <h4 class="mb-4">Mais passeios que possam te interessar</h4>
+    <div class="container" >       
+        <div id="carouselPasseios-p" class="carousel slide" data-bs-ride="carousel">
+    
+            <!-- Slides do Carrossel -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        {% for pCarrossel in pCarrossel[:4] %}
+                        <div class="col-md-3">
+                            <div class="card ">
+                                <a href="/detalhes/{{ pCarrossel[0] }}">
+                                    <img src="../static/images/img{{ pCarrossel[0] }}.png" class="card-img-top">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ pCarrossel[1] }}</h5>
+                                    <div class="align-bottom">
+                                        <p class="card-text">{{ pCarrossel[3] }} - {{ pCarrossel[2] }}</p>
+                                        <p class="card-text">Categoria: {{ pCarrossel[7] }}</p>
+                                        <p class="text-success">R$ {{ pCarrossel[6] }} por pessoa</p>
+                                    </div>
+                                 </div>
+                            </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        {% for pCarrossel in pCarrossel[4:8] %}
+                        <div class="col-md-3">
+                            <div class="card">
+                                <a href="/detalhes/{{ pCarrossel[0] }}">
+                                    <img src="../static/images/img{{ pCarrossel[0] }}.png" class="card-img-top">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ pCarrossel[1] }}</h5>
+                                    <p class="card-text">{{ pCarrossel[3] }} - {{ pCarrossel[2] }}</p>
+                                    <p class="card-text">Categoria: {{ pCarrossel[7] }}</p>
+                                    <p class="text-success">R$ {{ pCarrossel[6] }} por pessoa</p>
+                                 </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-            <div class="carousel-item">
-                <div class="row">
-                    {% for pCarrossel in pCarrossel[:4] %}
-                    <div class="col-md-3">
-                        <div class="card">
-                            <img src="../static/images/imgCanion.png" class="card-img-top" alt="Imagem do Passeio">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ pCarrossel[1] }}</h5>
-                                <p class="card-text">{{ pCarrossel[3] }} - {{ pCarrossel[2] }}</p>
-                                <p class="card-text">Categoria: {{ pCarrossel[7] }}</p>
-                                <p class="text-success">R$ {{ pCarrossel[6] }} por pessoa</p>
-                                <p><a href="/detalhes/{{ pCarrossel[0] }}" class="btn btn-primary">Exibir passeio</a></p>
-                             </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
+    
+            <!-- Indicadores -->
+            <ol class="carousel-indicators" id="cPasseiosInd">
+                <li data-bs-target="#carouselPasseios-p" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#carouselPasseios-p" data-bs-slide-to="1"></li>
+            </ol>
+            <!-- Controles do Carrossel -->
+            <a class="carousel-control-prev" href="#carouselPasseios-p" role="button" data-bs-slide="prev" id="carrosselPasseio">
+                <span class="carousel-control-prev-icon" aria-hidden="true" id="cPasseios"></span>
+                <span class="visually-hidden">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselPasseios-p" role="button" data-bs-slide="next" id="carrosselPasseio">
+                <span class="carousel-control-next-icon" aria-hidden="true" id="cPasseios"></span>
+                <span class="visually-hidden">Próximo</span>
+            </a>
         </div>
-
-        <!-- Controles do Carrossel -->
-        <a class="carousel-control-prev" href="#carouselPasseios" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselPasseios" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Próximo</span>
-        </a>
     </div>
+    
 </div>
 
 {% endblock %}

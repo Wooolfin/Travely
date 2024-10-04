@@ -17,3 +17,11 @@
     height: 50px;
     border-radius: 10px;
 }
+
+#adc {
+    color: black;       
+}
+
+#adc:hover {
+    text-decoration: underline;
+}

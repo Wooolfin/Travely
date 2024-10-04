@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo:wght@700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Vampiro+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+    --cor-primaria: #027368; 
+    --cor-secundaria: #5E4333; 
+}
+
+#inter {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+main {
+    margin-top: 16px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer; 
+}
+
+/* <div class="card col-md-8" style="width: 18rem;background-color: blue; height: 500px;"></div> */

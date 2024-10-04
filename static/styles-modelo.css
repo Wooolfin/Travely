@@ -19,7 +19,7 @@ body{
 header {
     border-bottom: solid;
     border-bottom-width: 2px;
-    color: #000000;
+    color: var(--cor-primaria);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -35,10 +35,6 @@ header {
 .logo img {
     height: 100%;
 }
-/* .iconeUser{
-    width: 94px;
-    height: 52px;
-} */
 
 .menu {
     display: flex;

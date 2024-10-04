@@ -26,7 +26,7 @@
 }
 
 #passeios {
-    margin: 32px;
+    /* margin: 32px; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -103,7 +103,7 @@
 }
 
 .carousel-inner .carousel-item {
-    transition: transform 3s ease, opacity 2s ease-in-out;
+    transition: transform 4s ease, opacity 2s linear;
 }
 
 .carousel-indicators [data-bs-target]{
@@ -123,9 +123,7 @@
 .card-title {
     margin-bottom: 0;
 }
-.card-title {
-    margin-bottom: 0;
-}
+
 .h5{
     margin-bottom: 0;
 }
@@ -145,3 +143,4 @@
 .container {
     max-width: 100%;
 }
+

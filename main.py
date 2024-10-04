@@ -156,7 +156,7 @@ def detalhes(id):
     cursorDB.close()
 
     # Renderizando o template com todos os dados necessários
-    return render_template("detalhes.html", passeio=passeio, pCarrossel=pCarrossel, tipo=tipo_usuario, guia=dadosGuia, total=total, qtdTurAg=qtdTurAg, id=id)
+    return render_template("detalhes.html", passeio=passeio, pCarrossel=pCarrossel, tipo=tipo_usuario, guia=dadosGuia, total=total, qtdTurAg=qtdTurAg,valor=valor_passeio, id=id)
 
 #ROTA PARA O TURISTA CONFIRMAR AGENDAMENTO
 @app.route("/confirmaPag/<int:id>", methods=['GET', 'POST'])
@@ -573,23 +573,21 @@ def editadoPasseio(id):
     passeio_atual = cursorDB.fetchone()
 
     nome = request.form['nome'] if request.form['nome'] else passeio_atual[1]
-    cepEndPasseio = request.form['cepEndPasseio'] if request.form['cepEndPasseio'] else passeio_atual[2]
-    ruaEndPasseio = request.form['ruaEndPasseio'] if request.form['ruaEndPasseio'] else passeio_atual[3]
+    estadoPasseio = request.form['estadoPasseio'] if request.form['estadoPasseio'] else passeio_atual[2]
+    cidadePasseio = request.form['cidadePasseio'] if request.form['cidadePasseio'] else passeio_atual[3]
     bairroEndPasseio = request.form['bairroEndPasseio'] if request.form['bairroEndPasseio'] else passeio_atual[4]
-    numEndPasseio = request.form['numEndPasseio'] if request.form['numEndPasseio'] else passeio_atual[5]
-    qtdPessoas = request.form['qtdPessoas'] if request.form['qtdPessoas'] else passeio_atual[6]
-    tempoPasseio = request.form['tempo'] if request.form['tempo'] else passeio_atual[7]
-    valor = request.form['valor'] if request.form['valor'] else passeio_atual[8]
+    qtdPessoas = request.form['qtdPessoas'] if request.form['qtdPessoas'] else passeio_atual[5]
+    valor = request.form['valor'] if request.form['valor'] else passeio_atual[6]
+    tempoPasseio = request.form['tempoPasseio'] if request.form['tempoPasseio'] else passeio_atual[7]
     descricaoPasseio = request.form['descricao'] if request.form['descricao'] else passeio_atual[9]
 
     # Atualiza os dados do passeio no banco de dados
     comandoSQL_update = '''
     UPDATE passeio 
-    SET nome = %s, cepEndPasseio = %s, ruaEndPasseio = %s, bairroEndPasseio = %s, numEndPasseio = %s, 
-    qtdPessoas = %s, valor = %s, tempoPasseio = %s,  descricaoPasseio = %s
+    SET nome = %s, estadoPasseio = %s, cidadePasseio = %s, bairroEndPasseio = %s, qtdPessoas = %s, valor = %s, tempoPasseio = %s,  descricaoPasseio = %s
     WHERE idPasseio = %s
     '''
-    valores = (nome, cepEndPasseio, ruaEndPasseio, bairroEndPasseio, numEndPasseio, qtdPessoas, valor, tempoPasseio, descricaoPasseio, id)
+    valores = (nome, estadoPasseio, cidadePasseio, bairroEndPasseio, qtdPessoas, valor, tempoPasseio, descricaoPasseio, id)
 
     try:
         cursorDB.execute(comandoSQL_update, valores)

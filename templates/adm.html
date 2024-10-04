@@ -8,10 +8,11 @@
   <p>Olá, {{ usuario[0] }}</p>
 
   <div class="d-flex justify-content-end align-items-center">
+    {% if tipo %}
     <a href="/cadpasseio">
       <button class="btn btn-success" type="submit">Cadastrar Passeio</button>
     </a>
-
+    {% endif %}
     <a href="/logout">
         <button class="btn btn-danger" type="submit" id="sair">Sair</button>
     </a>
@@ -36,7 +37,7 @@
         <div class="boxpasseios-info">
           <h5 class="card-title">{{ passeio[1] }}</h5>
           <p class="card-text">{{ passeio[3] }} - {{ passeio[2] }}</p>
-          <p class="card-text">Categoria: {{ passeio[7] }}</p>
+          <p class="card-text">Tempo: {{ passeio[7] }} min</p>
           <p class="text-success">R$ {{ passeio[6] }} por pessoa</p>
           <a href="/editPasseio/{{ passeio[0] }}" class="btn btn-primary">
             Editar
@@ -53,6 +54,8 @@
     {% endfor %} 
   {% endif %}
 </div>
+{% else %} 
+<img src="../static/images/IMG CONSTRUÇÃO.jpg" style="width: 80%;" class="mt-5">
 
 {% endif %}
 

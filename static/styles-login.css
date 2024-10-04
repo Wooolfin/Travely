@@ -147,3 +147,7 @@ main {
 #cadastrar {
     font-size: 12px;
 }
+
+.btnGeral:hover{
+    color: white;
+}
