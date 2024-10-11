@@ -16,13 +16,12 @@
 }
 
 main {
-    margin-top: 16px;
     color: black;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: 130vh;
 }
 
 a{
@@ -45,44 +44,42 @@ a{
     background-color: brown;
     color: white;
 }
-
-button{
-    background-color: var(--cor-primaria);
-    border-radius: 4px;
+.btnGeral {
+    background-color: white;
+    border-radius: 10px;
     box-sizing: border-box;
-    color: white;
+    color: rgb(245, 0, 0);
     cursor: pointer;
     width: 60px;
-    height: 50px;
+    height: 37px;
     margin-left: 10px;
     transition: all 0.3s ease;
 }
 
-.btnSair {
-    background-color: var(--cor-primaria);
-    border-radius: 4px;
-    box-sizing: border-box;
-    color: white;
-    cursor: pointer;
-    width: 60px;
-    height: 50px;
-    margin-left: 10px;
-    transition: all 0.3s ease;
+.btnGeral:hover {
+    background: #ff0000;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    color: rgb(255, 255, 255);
 }
 
-.btnSair:hover {
-    background: #01b19f;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19)
+.btnGeral2 {
+    margin-top: 20px;
+    padding: 5px;
+    background: #027368;
+    cursor: pointer;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin: 10px;
+    width: 150px;
+    text-decoration: none;
 }
 
 .logout {
     display: flex;
     flex-direction: column;
-}
-
-button:hover{
-    background: var(--cor-primaria);
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19)
 }
 
 
@@ -141,13 +138,6 @@ button:hover{
 .card-img, .card-img-bottom, .card-img-top {
     width: 100%;
     height: 200px;
-}
-
-.btn-danger {
-    color: #f00;
-    background-color: #ffffff;
-    border-color: #dc3545;
-    border-radius: 12px;
 }
 
 #sair{

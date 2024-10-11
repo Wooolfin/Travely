@@ -1,9 +1,10 @@
 /*Documentos CSS*/
 @import url('https://fonts.googleapis.com/css2?family=Cardo:wght@700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Vampiro+One&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 :root {
-    --cor-primaria: #027368; 
-    --cor-secundaria: #5E4333; 
+    --cor-primaria: #027368;
+    --cor-secundaria: #5E4333;
+    --cor-terceiraria: #9c3903;
 }
 
 * {
@@ -12,26 +13,31 @@
     box-sizing: border-box;
     font-family: 'Istok', sans-serif;
 }
-body{
+
+body {
     background-color: rgb(255, 255, 255);
     height: 100vh;
 }
+
 header {
     border-bottom: solid;
     border-bottom-width: 2px;
+    box-shadow: 0 0px 7px 0 #027368, 0 17px 50px 0 rgba(0, 0, 0, 0.19);
     color: var(--cor-primaria);
+    position: fixed;
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    min-height: 80px;
+    min-height: 50px;
     background-color: rgb(255, 255, 255);
+    z-index: 1000;
 }
+
 .logo {
-    height:40px;
+    padding-top: 5px;
+    height: 40px;
     margin: 0 0px;
 }
+
 .logo img {
     height: 100%;
 }
@@ -39,37 +45,42 @@ header {
 .menu {
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     flex-wrap: wrap;
     flex-direction: row;
 }
+
 .menu ul {
     list-style: none;
 }
+
 .menu ul li {
     display: inline-block;
 }
-.menu ul li a{
+
+.menu ul li a {
     color: #027368;
-    padding:20px 40px;
-    font-size:16px;
+    padding: 20px 40px;
+    font-size: 16px;
     font-weight: bold;
     transition: all 0.3s ease;
     text-decoration: none;
 }
+
 .menu ul li a:hover {
     color: #01b19f;
     font-size: 16.5px;
 }
 
-main{
+main {
     color: black;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: 137vh;
 }
+
 .mkt {
     background-image: url('images/Banner\ Home.png');
     width: 100%;
@@ -90,45 +101,51 @@ main{
     justify-content: center;
     align-items: center;
 }
-.cad{
+
+.cad {
     flex-direction: column;
 }
 
-footer{
-    color: rgb(234, 229, 229);
+footer {
+    background-color: #f8f9fa;
+    padding-top: 10px; 
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    padding-top: 16px;
-    padding-bottom: 16px;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    height: 50px;
-    background-color: #5E4333;
-    font-size: small;
 }
-.btnFooter {
-    color: white;
-    border: none;
+
+footer .footer-buttons {
+    list-style: none;
+    padding: 0;
+}
+
+footer .footer-buttons button {
+    display: inline;
+    margin: 0 -10px;
     background: none;
-    cursor: pointer;
+    border: none;
 }
 
-.btnFooter:hover {
-    color: #01b19f;
-    font-size: 14px;
-    transition: all 0.3s ease;
+footer .footer-buttons button:hover {
+    text-decoration: none;
+    color: #5E4333;
 }
 
-.dirTravely {
-    font-size: 14px;
-    padding-top: 16px;
+footer p {
+    text-align: center;
+    padding-right: 270px;
+    color: #6c757d;
+    padding-top: 5px;
 }
 
-
-.linha {
-    height: 30px;
-    border-right: 3px solid rgb(255, 255, 255);
-    margin: 10px;
+footer .footer-image img {
+    max-width: 100px; 
 }
 
 .btnGeral {
@@ -143,16 +160,70 @@ footer{
     transition: all 0.3s ease;
     margin: 10px;
     width: 150px;
+    text-decoration: none;
 }
 
 .btnGeral:hover {
     background: #01b19f;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
-.voltar{ /*edita o botao voltar da pagina*/
+
+.voltar {
     margin: 20px;
 }
-.voltar:hover{ /*adiciona uma decoracao no botao voltar*/
+
+.voltar:hover {
     text-decoration: underline;
 }
 
+.sidebar {
+    margin-top: 50px;
+    padding: 0;
+    width: 170px;
+    background-color: #ffffff;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    z-index: 1000;
+    right: 0;
+    transition: 0.9s;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+
+.sidebar a:hover:not(.active) {
+    color: #01b19f;
+    transition: all 0.3s ease;
+}
+
+.iconUsuario {
+    border: none;
+    background: none;
+}
+
+.iconUsuario:hover {
+    color: #01b19f;
+}
+
+#toggle-btn {
+    cursor: pointer;
+    color: #5E4333;
+    border: none;
+    z-index: 1;
+    background: none;
+    display: inline;
+    padding-left: 7px;
+}
+
+#toggle-btn:hover {
+    color: #9c3903;
+    transition: all 0.2s ease;
+}
