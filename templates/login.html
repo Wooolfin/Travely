@@ -7,7 +7,7 @@
 <body>
     <div class="container h-100">
         <div class="row h-100 justify-content-end align-items-center">
-            <div class="col-12 col-md-6 col-lg-4 login-container">
+            <div class="col-6 col-md-6 col-lg-4 login-container">
                 <h2>Entrar</h2>
 
 
@@ -16,6 +16,7 @@
                     {% if msg %}
                     <h2 style="color: red;">{{ msg }}</h2>
                     {% endif %}
+                    <div class="inputLogin">
                         <div class="form-usuario">
                             <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Nome de Usuário" required>
                         </div>
@@ -23,6 +24,7 @@
                             <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha"
                                 required>
                         </div>
+                    </div>
                             <button class="btnGeral" type="submit">Login</button>
                         <div>
                             <button class="btnGeral" type="button" onclick="window.location.href='/cadGuia';">Cadastrar
@@ -36,6 +38,18 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const input = document.getElementById("myInput");
+    
+        input.addEventListener("focus", function() {
+            this.placeholder = "";
+        });
+    
+        input.addEventListener("blur", function() {
+            this.placeholder = "Digite algo";
+        });
+    </script>
 
 </body>
 {% endblock %}
